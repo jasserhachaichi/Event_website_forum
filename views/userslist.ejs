@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<%- include('./partials/head') %>
+<%- include('./dashbordpartials/dlinks') %>
+    <body>
+      
+      <div class='dashboard'>
+        <%- include('./dashbordpartials/sidebar') %>
+        <div class='dashboard-app'>
+
+
+
+
+          <%- include('./dashbordpartials/navbar') %>          
+          
+          
+          
+          
+          
+          
+          <div class='dashboard-content'>
+            <div class='container'>
+              <div class='card'>
+                <div class='card-header'>
+                  <h2 class="fw-semibold forum-primary-color-1 py-3">Liste des utilisateurs</h2>
+                </div>
+
+
+                <div id="forumTable" class="container">
+                  <div class="table-filter">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="show-entries">
+                                <span>Montrer</span>
+                                <select class="form-control-table" onchange="location = this.value;" id="NbRangeSelect">
+                                  <option value="?perPage=10">10</option>
+                                  <option value="?perPage=20">20</option>
+                                  <option value="?perPage=50">50</option>
+                                  <option value="?perPage=100">100</option>
+                              </select>
+                              <span>entrées</span>
+                                <span>entrées</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                          <form action="userslist" method="get"> 
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            <div class="filter-group">
+                              <input type="text" class="form-control-table" name="search" placeholder="Recherche" value="<%= searchQuery || '' %>">                           
+                             </div>
+                            </form>
+                            <div class="filter-group">
+                              <label>Position</label>
+                              <select class="form-control-table" onchange="location = this.value;" id="positionSelect">
+                                  <option value="?position=All">All</option>
+                                  <option value="?position=Admin">Administrateur</option>
+                                  <option value="?position=User">Utilisateur</option>						
+                              </select>
+                          </div>
+                          
+                            <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                        </div>
+                    </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-12 mx-auto">
+
+                        <div class="bg-white ">
+                          <div class="table-responsive">
+                            <table id="Forum_table" style="width:100%" class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th data-sort="0" onclick="sortTable(0)">Nom<i class="fa-solid fa-up-down"></i></th>
+                                  <th data-sort="1" onclick="sortTable(1)">Prénom<i class="fa-solid fa-up-down"></i></th>
+                                  <th data-sort="2" onclick="sortTable(2)">Position<i class="fa-solid fa-up-down"></i></th>
+                                  <th data-sort="3" onclick="sortTable(3)">Email<i class="fa-solid fa-up-down"></i></th>
+                                  <th data-sort="4" onclick="sortTable(4)">Téléphone<i class="fa-solid fa-up-down"></i></th>
+                                  <th class="text-center">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% if (CurrentAccounts.length > 0) { %>
+                                <% CurrentAccounts.forEach(user => { %>
+                                  <tr id="row_<%= user.id %>">
+                                    <td><%= user.name %></td>
+                                    <td><%= user.firstname %></td>
+                                    <td>
+                                      <% if (user.position === "User") { %>
+                                        Utilisateur
+                                      <% } else if (user.position === "Admin") { %>
+                                        Administrateur
+                                      <% } %>
+                                    </td>
+                                    <td><%= user.email %></td>
+                                    <td><%= (user.mobile && user.mobile.length > 0) ? user.mobile : "-" %></td>
+                                    <td class="allActions">
+                                      <li class="edit" onclick="showmodaledit(this)" Forum_data="<%= user.id %>"><i class="fa-solid fa-pen-to-square"></i></li>
+                                      <li class="delete" onclick="showmodaldelete(this)" Forum_data="<%= user.id %>"><i class="fa-regular fa-trash"></i></li>
+                                    </td>
+                                  </tr>
+                                <% }); %>
+                                <% } else { %>
+                                  <tr>
+                                    <td colspan="6">Il n'y a pas de comptes.</td>
+                                  </tr>
+                                <% } %>
+                              </tbody>
+                            </table>
+                            <div class="clearfix">
+                              <div class="hint-text">Affichage de <b><%= (currentPage - 1) * perPage + 1 %></b> à <b><%= (currentPage * perPage) > totalAccounts ? totalAccounts : (currentPage * perPage) %></b> sur <b><%= totalAccounts %></b> entrées</div>
+                              <ul class="pagination">
+                                <li class="page-item">
+                                  <a href="?page=<%= currentPage - 1 === 0 ? totalPages : currentPage - 1 %>" class="page-link">Previous</a>
+                                </li>
+                              
+                                <% for(let i = 1; i <= totalPages; i++) { %>
+                                  <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                    <a href="?page=<%= i %>" class="page-link"><%= i %></a>
+                                  </li>
+                                <% } %>
+                              
+                                <li class="page-item">
+                                  <a href="?page=<%= currentPage + 1 > totalPages ? 1 : currentPage + 1 %>" class="page-link">Next</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div id="deleteConfirmationModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation de la suppression</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Etes-vous sûr de vouloir supprimer cette entrée?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <form action="userslist" method="POST">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+<div id="SuccessModalformessage" class="modal fade" >
+	<div class="modal-dialog modal-confirm"> 
+		<div class="modal-content">
+			<div class="modal-header justify-content-center bg-success-modal-header">
+				<div class="icon-box">
+					<i class="fa-solid fa-check"></i>
+				</div>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+			</div>
+			<div class="modal-body text-center">
+				<h4>Super!</h4>	
+        <% if(All_Message && All_Message.success) { %>
+				<p><%= All_Message.success %></p>
+          <% } %>
+			</div>
+		</div>
+	</div>
+</div> 
+
+
+
+<div id="failModalformessage" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center bg-fail-modal-header">
+				<div class="icon-box">
+					<i class="fa-solid fa-x"></i>
+				</div>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+			</div>
+			<div class="modal-body text-center">
+				<h4>Oups !</h4>	
+        <% if(All_Message && All_Message.error) { %>
+          <p><%= All_Message.error %></p>
+            <% } %>
+			</div>
+		</div>
+	</div>
+</div>   
+
+<div id="EditModal" class="modal fade" >
+	<div class="modal-dialog"> 
+		<div class="modal-content">
+
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">Modifier les informations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+
+
+			<form action="#" method="POST" class="modal-body" autocomplete="off">
+        <p class="text-danger">Remplir uniquement les champs que vous voulez mettre à jour.</p>
+        <div>
+          <label for="name" class="form-label fw-medium">Nom :</label>
+          <input type="text" class="form-control fw-medium" id="name" name="name" autocomplete="Nom">
+        </div>
+        <div>
+          <label for="firstname" class="form-label fw-medium">Prénom :</label>
+          <input type="text" class="form-control fw-medium" id="firstname" name="firstname" autocomplete="Prénom">
+        </div>
+
+
+        <div class="mt-3">
+          <label for="email" class="form-label fw-medium">Adresse e-mail :</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                <path
+                  d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z">
+                </path>
+              </svg>
+            </span>
+            <input type="email" class="form-control" id="email" name="email" autocomplete="Adresse e-mail">
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="newpassword" class="form-label fw-medium">Nouveau mot de passe d'utilisateur :</label>
+          <div class="input-group">
+            <span class="input-group-text cursor-pointer" onclick="passwordstate(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M6.615 21q-.67 0-1.143-.472Q5 20.056 5 19.385v-8.77q0-.67.472-1.143Q5.944 9 6.615 9H8V7q0-1.671 1.164-2.836T12 3q1.671 0 2.836 1.164T16 7v2h1.385q.67 0 1.143.472q.472.472.472 1.143v8.77q0 .67-.472 1.143q-.472.472-1.143.472H6.615Zm0-1h10.77q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T17.385 10H6.615q-.269 0-.442.173T6 10.615v8.77q0 .269.173.442t.442.173ZM12 16.5q.633 0 1.066-.434q.434-.433.434-1.066t-.434-1.066Q12.633 13.5 12 13.5t-1.066.434Q10.5 14.367 10.5 15t.434 1.066q.433.434 1.066.434ZM9 9h6V7q0-1.25-.875-2.125T12 4q-1.25 0-2.125.875T9 7v2ZM6 20V10v10Z" />
+              </svg> </span>
+            <input  type="password" id="newpassword" class="form-control" name="newpassword" autocomplete="Nouveau mot de passe d'utilisateur">
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="position" class="form-label fw-medium">Position :</label>
+          <div class="input-group">
+            <select id="position" class="form-control fw-medium" name="position" >
+              <option value="" selected>-</option>
+              <option value="Admin">Administrateur</option>
+              <option value="User" >Utilisateur</option>
+            </select>
+            <div class="input-group-text">
+              <i class="fas fa-caret-down"></i>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="phone" class="form-label fw-medium">Numéro de téléphone
+          </label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                <path
+                  d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z">
+                </path>
+              </svg>
+            </span>
+            <input type="tel" class="form-control" id="phone" name="mobile" autocomplete="Numéro de téléphone">
+          </div>
+        </div>
+
+
+        <div class="nav-item-divider"></div>
+
+        <div class="mt-3">
+          <label for="Adminpassword" class="form-label fw-medium">Mot de passe d'administrateur : <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text cursor-pointer" onclick="passwordstate(this)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24">
+                <path fill="currentColor"
+                  d="M6.615 21q-.67 0-1.143-.472Q5 20.056 5 19.385v-8.77q0-.67.472-1.143Q5.944 9 6.615 9H8V7q0-1.671 1.164-2.836T12 3q1.671 0 2.836 1.164T16 7v2h1.385q.67 0 1.143.472q.472.472.472 1.143v8.77q0 .67-.472 1.143q-.472.472-1.143.472H6.615Zm0-1h10.77q.269 0 .442-.173t.173-.442v-8.77q0-.269-.173-.442T17.385 10H6.615q-.269 0-.442.173T6 10.615v8.77q0 .269.173.442t.442.173ZM12 16.5q.633 0 1.066-.434q.434-.433.434-1.066t-.434-1.066Q12.633 13.5 12 13.5t-1.066.434Q10.5 14.367 10.5 15t.434 1.066q.433.434 1.066.434ZM9 9h6V7q0-1.25-.875-2.125T12 4q-1.25 0-2.125.875T9 7v2ZM6 20V10v10Z" />
+              </svg> </span>
+            <input type="password" id="Adminpassword" class="form-control" name="Adminpassword" autocomplete="Mot de passe d'administrateur">
+          </div>
+        </div>
+        <div class="nav-item-divider"></div>
+        <div>
+          <div class="d-grid">
+            <button class="btn forum-primary-background-color-1 forum-color-white btn-lg" type="submit" >Mise à jour</button>
+          </div>
+        </div>
+        <div>
+          <% if ((typeof errors!=="undefined" ) && (errors.length> 0)) { %>
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <li>
+                  <%= errors %>
+                </li>
+              </ul>
+            </div>
+            <% } %>
+        </div>
+        <div>
+          <% if ((typeof donemsg!=="undefined" ) && (donemsg.length> 0)) { %>
+            <div class="alert alert-success" role="alert">
+              <ul>
+                <li>
+                  <%= donemsg %>
+                </li>
+              </ul>
+            </div>
+            <% } %>
+        </div>
+
+
+			</form>
+		</div>
+	</div>
+</div> 
+
+
+
+
+
+    </body>
+    <%- include('./links') %>
+    <%- include('./dashbordpartials/footer') %>
+
+
+    <script>
+      // Your showmodal function should toggle the modal display
+      function showmodaldelete(element) {
+        // Use Bootstrap’s JavaScript modal toggle
+        let deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+        let forumData = element.getAttribute('Forum_data');
+        const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
+        const anchorTag = deleteConfirmationModal.querySelector('.modal-footer form');
+        const actionAttribute = anchorTag.getAttribute('action');
+        anchorTag.setAttribute('action',actionAttribute + "/delete/" + forumData);
+        deleteModal.show();
+      }
+
+      function showmodaledit(element) {
+        // Use Bootstrap’s JavaScript modal toggle
+        let EditModal = new bootstrap.Modal(document.getElementById('EditModal'));
+        let forumData = element.getAttribute('Forum_data');
+        var ModalEditModal = document.getElementById('EditModal');
+        var anchorTag = ModalEditModal.querySelector('form');
+        anchorTag.setAttribute('action',"userslist/edit/" + forumData);
+        EditModal.show();
+      }
+      
+
+
+      
+      </script>
+
+<script>
+  // Filter Bar
+  const urlParams = new URLSearchParams(window.location.search);
+  const userPosition = urlParams.get('position') ;
+  const positionSelect = document.getElementById("positionSelect");
+
+  for (let i = 0; i < positionSelect.options.length; i++) {
+      if (positionSelect.options[i].value === `?position=${userPosition}`) {
+          positionSelect.selectedIndex = i;
+          break;
+      };
+  };
+
+  const NbRangeSelect = document.getElementById("NbRangeSelect");
+  const NbRange = urlParams.get('perPage');
+
+  for (let i = 0; i < NbRangeSelect.options.length; i++) {
+      if (NbRangeSelect.options[i].value === `?perPage=${NbRange}`) {
+          NbRangeSelect.selectedIndex = i;
+          break;
+      };
+  };
+
+
+  // Set cookies
+  setCookie('userPosition', userPosition, 30);  // Expires in 30 days
+  setCookie('NbRange', NbRange, 30); 
+
+  // Get the value from the  cookie
+  var positionValue = getCookie('userPosition');
+  var NBRangeValue = getCookie('NbRange');
+  // Update the value attribute for each option
+  var NbRangeOptions = NbRangeSelect.options;
+  for (var i = 0; i < NbRangeOptions.length; i++) {
+    NbRangeOptions[i].value += '&position=' + positionValue;
+  }
+
+  var positionSelectOptions = positionSelect.options;
+  for (var i = 0; i < positionSelectOptions.length; i++) {
+    positionSelectOptions[i].value += '&perPage=' + NBRangeValue;
+  }
+</script>
+
+
+
+<% if(All_Message && All_Message.success) { %>
+  <script>
+        let succesModal = new bootstrap.Modal(document.getElementById('SuccessModalformessage'));
+        succesModal.show();
+  </script>
+<% } %>
+<% if(All_Message && All_Message.error) { %>
+  <script>
+        let errorModal = new bootstrap.Modal(document.getElementById('failModalformessage'));
+        errorModal.show();
+  </script>
+<% } %>
+
+
+</html>

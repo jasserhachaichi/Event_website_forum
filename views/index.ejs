@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+
+    <body>
+<%- include('./partials/navbarone') %>
+<%- include('./partials/hero') %>
+
+
+<%- include('./partials/service') %>
+
+<%- include('./partials/homeAbout') %>
+<%- include('./partials/achievement') %>
+
+<%- include('./partials/sponsors') %>
+<%- include('./partials/reviews') %>
+
+<%- include('./partials/ForumProgram') %>
+
+<%- include('./partials/Teamsection') %>
+
+
+
+<%- include('./partials/calltoaction') %>
+
+<%- include('./partials/ScrollTopButton') %>
+<%- include('./partials/footer') %>
+<div id="forumAlert" class="wrapper">
+    <div class="alert_wrapper">
+
+
+        <% if ((typeof newsletters !== "undefined" && (newsletters !== null))) { %>
+          <% if ( newsletters === true) { %>
+      <div class="alert_item third_item" id="successAlert">
+        <div class="icon">
+            <i class="fa-solid fa-check" name="checkmark"></i>
+          </div>
+          <div class="text">
+            <h3>Great success!</h3>
+            <p class="fw-bold">E-mail ajouté avec succès. Vous pouvez désormais recevoir nos newsletters, Veuillez vérifier votre boîte e-mail.</p>
+            <p > </p>
+          </div>
+          <div class="close">
+            <i class="fa-solid fa-xmark" name="close"></i>
+                              </div>
+      </div>
+      <% } %>
+
+      <% if ( newsletters === false) { %>
+      <div class="alert_item first_item" id="informationAlert">
+        <div class="icon">
+          <i class="fa-solid fa-info" name="information"></i>
+        </div>
+        <div class="text">
+          <h3>Vous êtes déjà inscrit à nos newsletters</h3>
+        </div>
+        <div class="close">
+          <i class="fa-solid fa-xmark" name="close"></i>
+        </div>
+    </div>
+
+    <% } %>
+
+      <% } %>
+
+
+      <% if ((typeof newsletterError !== "undefined") && newsletterError) { %>
+
+        <div id="errorAlert" class="alert_item second_item">
+          <div class="icon">
+              <i class="fa-solid fa-exclamation" name="alert"></i>
+            </div>
+            <div class="text">
+              
+              <h3><%=  newsletterError %></h3>
+              <p>Nous sommes désolés que vous ayez à rencontrer quelques problèmes ! Veuillez réessayer plus tard.</p>
+            </div>
+            <div class="close">
+              <i class="fa-solid fa-xmark" name="close"></i>
+                                </div>
+        </div>
+
+        <% } %>
+
+
+
+        <% if ((typeof newsletterWarning !== "undefined") && newsletterWarning){ %>
+          <div class="alert_item first_item" id="informationAlert">
+            <div class="icon">
+              <i class="fa-solid fa-info" name="information"></i>
+            </div>
+            <div class="text">
+              <h3><%= newsletterWarning   %></h3>
+            </div>
+            <div class="close">
+              <i class="fa-solid fa-xmark" name="close"></i>
+            </div>
+        </div>
+        <% } %>
+
+
+
+
+
+
+    </div>
+  </div>
+    </body>
+
+</html>

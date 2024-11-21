@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self'">
+
+    <title>Message from Forum ENIG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: rgb(205, 205, 206);
+            filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
+        }
+
+        img {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            pointer-events: none
+        }
+
+        .mail_template {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mail_template .email-container span , .mail_template .mail_footer a{
+            text-decoration: none;
+            color: #00b2ff;
+            font-weight: bold;
+        }
+
+        .mail_template .head_logo,
+        .mail_template .email-container,
+        .mail_template .head_mail,
+        .mail_template .signature {
+            margin-top: 40px;
+            filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
+            border-radius: 5px;
+        }
+
+        .mail_template .email-container {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .mail_template .head_mail img {
+            width: 100%;
+            height: auto;
+        }
+        .mail_template .head_logo {
+            text-align: center;
+        }
+        .mail_template .head_logo img {
+            width: 80px;
+            height: auto;
+        }
+
+        .mail_template .msg_greeting h1 {
+            text-align: center;
+        }
+        .mail_template .mail_footer{
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="mail_template ">
+        <div class="head_logo">
+            <img src="https://i.postimg.cc/28D3ZMD3/logo-forum.png" alt="logo Forum ENIG">
+        </div>
+        <div class="head_mail">
+            <img src="https://i.postimg.cc/gk955B1V/cover.jpg" alt="banner Forum ENIG">
+        </div>
+        <div class="email-container">
+            <div class="msg_greeting">
+                <h1>Bienvenue <%=fullname%></h1>
+            </div>
+            <p>Nous espérons que cet e-mail vous trouvera bien. Nous vous écrivons pour confirmer que nous avons reçu votre message. Merci de nous contacter &#33;</p>
+            <p>Vos contributions nous sont précieuses et nous sommes heureux que vous ayez pris le temps de nous contacter. Nous répondrons à votre demande dans les plus brefs délais.</p>
+
+            <br>
+            <hr>
+            <h2> Vos entrées :</h2>
+            <p><span>Nom & prénom :</span> <%=fullname%> </p>
+            <p><span>Adresse e-mail :</span> <%=email%> </p>
+            <p><span>Numéro de téléphone :</span> <%=phone%></p>
+            <p><span>Nom de l'entreprise :</span> <%=company%> </p>
+            <p><span>Sujet :</span></p>
+            <p> <%=subject%> </p>
+            <p><span>Message :</span></p>
+            <p> <%=message%> </p>
+
+
+
+
+        </div>
+
+        <div class="mail_footer">
+            <a href="#">Forum Entreprise ENIG </a> © 2021 - <span><%
+                const date = new Date();
+                %><%= date.getFullYear() %></span>. Tous droits réservés.
+        </div>
+        
+
+    </div>
+
+
+</body>
+
+
+</html>

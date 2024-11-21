@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<%- include('./partials/head') %>
+<%- include('./dashbordpartials/dlinks') %>
+    <body>
+      <div class='dashboard'>
+        <%- include('./dashbordpartials/sidebar') %>
+        <div class='dashboard-app'>
+
+
+
+
+          <%- include('./dashbordpartials/navbar') %>          
+          
+          
+          
+          
+          
+          
+          <div class='dashboard-content'>
+            <div class='container'>
+              <div class='card'>
+                <div class='card-header'>
+                  <h2 class="fw-semibold forum-primary-color-1 py-3">Liste des suiveurs</h2>
+                </div>
+
+
+                <div id="forumTable" class="container">
+                  <div class="table-filter">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="show-entries">
+                                <span>Montrer</span>
+                                <select class="form-control-table" onchange="location = this.value;" id="NbRangeSelect"  value="jasser">
+                                  <option value="?perPage=10">10</option>
+                                  <option value="?perPage=20">20</option>
+                                  <option value="?perPage=50">50</option>
+                                  <option value="?perPage=100">100</option>
+                              </select>
+                              <span>entrées</span>
+                                <span>entrées</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                          <form action="followerslist" method="get"> 
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            <div class="filter-group">
+                              <input type="text" class="form-control-table" name="search" placeholder="Recherche" value="<%= searchQuery || '' %>">                           
+                             </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-12 mx-auto">
+
+                        <div class="bg-white ">
+                          <div class="table-responsive">
+                            <table id="Forum_table" style="width:100%" class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th data-sort="0" onclick="sortTable(0)">Email<i class="fa-solid fa-up-down"></i></th>
+                                  <th class="text-center">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% if (Currentfollowers.length > 0) { %>
+                                <% Currentfollowers.forEach(follow => { %>
+                                  <tr id="row_<%= follow.id %>">
+                                    <td><%= follow.email %></td>
+                                    <td class="allActions">
+                                      <li class="delete" onclick="showmodaldelete(this)" Forum_data="<%= follow.id %>"><i class="fa-regular fa-trash"></i></li>
+                                    </td>
+                                  </tr>
+                                <% }); %>
+                                <% } else { %>
+                                  <tr>
+                                    <td colspan="6">Il n'y a pas de suiveurs.</td>
+                                  </tr>
+                                <% } %>
+                              </tbody>
+                            </table>
+                            <div class="clearfix">
+                              <div class="hint-text">Affichage de <b><%= (currentPage - 1) * perPage + 1 %></b> à <b><%= (currentPage * perPage) > totalfollowers ? totalfollowers : (currentPage * perPage) %></b> sur <b><%= totalfollowers %></b> entrées</div>
+                              <ul class="pagination">
+                                <li class="page-item">
+                                  <a href="?page=<%= currentPage - 1 === 0 ? totalPages : currentPage - 1 %>" class="page-link">Previous</a>
+                                </li>
+                              
+                                <% for(let i = 1; i <= totalPages; i++) { %>
+                                  <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                                    <a href="?page=<%= i %>" class="page-link"><%= i %></a>
+                                  </li>
+                                <% } %>
+                              
+                                <li class="page-item">
+                                  <a href="?page=<%= currentPage + 1 > totalPages ? 1 : currentPage + 1 %>" class="page-link">Next</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div id="deleteConfirmationModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmation de la suppression</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Etes-vous sûr de vouloir supprimer cette entrée?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <form action="followerslist" method="POST">
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+<div id="SuccessModalformessage" class="modal fade" >
+	<div class="modal-dialog modal-confirm"> 
+		<div class="modal-content">
+			<div class="modal-header justify-content-center bg-success-modal-header">
+				<div class="icon-box">
+					<i class="fa-solid fa-check"></i>
+				</div>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+			</div>
+			<div class="modal-body text-center">
+				<h4>Super!</h4>	
+        <% if(All_Message && All_Message.success) { %>
+				<p><%= All_Message.success %></p>
+          <% } %>
+			</div>
+		</div>
+	</div>
+</div> 
+
+
+
+<div id="failModalformessage" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header justify-content-center bg-fail-modal-header">
+				<div class="icon-box">
+					<i class="fa-solid fa-x"></i>
+				</div>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+			</div>
+			<div class="modal-body text-center">
+				<h4>Oups !</h4>	
+        <% if(All_Message && All_Message.error) { %>
+          <p><%= All_Message.error %></p>
+            <% } %>
+			</div>
+		</div>
+	</div>
+</div>   
+
+
+
+
+    </body>
+    <%- include('./links') %>
+    <%- include('./dashbordpartials/footer') %>
+
+
+    <script>
+      // Your showmodal function should toggle the modal display
+      function showmodaldelete(element) {
+        // Use Bootstrap’s JavaScript modal toggle
+        let deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmationModal'));
+        let forumData = element.getAttribute('Forum_data');
+        const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
+        const anchorTag = deleteConfirmationModal.querySelector('.modal-footer form');
+        const actionAttribute = anchorTag.getAttribute('action');
+        anchorTag.setAttribute('action',actionAttribute + "/delete/" + forumData);
+        deleteModal.show();
+      }
+
+
+      
+      </script>
+
+<script>
+  // Filter Bar
+
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const NbRangeSelect = document.getElementById("NbRangeSelect");
+  const NbRange = urlParams.get('perPage');
+
+  for (let i = 0; i < NbRangeSelect.options.length; i++) {
+      if (NbRangeSelect.options[i].value === `?perPage=${NbRange}`) {
+          NbRangeSelect.selectedIndex = i;
+          break;
+      };
+  };
+</script>
+
+
+
+<% if(All_Message && All_Message.success) { %>
+  <script>
+        let succesModal = new bootstrap.Modal(document.getElementById('SuccessModalformessage'));
+        succesModal.show();
+  </script>
+<% } %>
+<% if(All_Message && All_Message.error) { %>
+  <script>
+        let errorModal = new bootstrap.Modal(document.getElementById('failModalformessage'));
+        errorModal.show();
+  </script>
+<% } %>
+
+
+</html>

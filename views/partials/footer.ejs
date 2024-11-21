@@ -1,0 +1,197 @@
+
+
+
+
+<footer class="footer forum-primary-background-color-1">
+
+  <div class=" py-5 py-xl-8 py-xxl-9  border-light">
+    <div class="container overflow-hidden">
+      <div class="row gy-5 gy-md-0">
+        <div class="col-xs-12 col-md-7 order-1 order-md-0">
+          <div class="copyright text-center text-md-start">
+            <span class="fw-bold forum-primary-color-2">Forum Entreprise ENIG</span> <span class="forum-color-white">&copy; 2023. Tous droits réservés.</span>
+          </div>
+          <div class="credits forum-color-white text-center text-md-start mt-2">
+            Designed and Developed By <a href="https://www.linkedin.com/in/jasser-hachaichi-85b469204/" class=" fw-bold text-decoration-none forum-primary-color-2">Jasser Hachaichi</a>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-5 order-0 order-md-1">
+          <ul class="nav justify-content-center justify-content-md-end">
+            <li class="nav-item">
+
+              <a class="nav-link" href="https://www.facebook.com/forum.enig">
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.instagram.com/forum.enig/" >
+                <i class="fa-brands fa-square-instagram"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.linkedin.com/in/forum-entreprise-enig/">
+                <i class="fa-brands fa-linkedin"></i>
+              </a>
+
+              </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</footer>
+<%- include('../links') %>
+<script>
+$(document).ready(function() {
+ 
+
+
+    (function () {
+    "use strict";
+  
+    var carousels = function () {
+      $("#carousel-services").owlCarousel({
+        loop: true,
+        margin: 0,
+        responsiveClass: true,
+        nav: false,
+        responsive: {
+          0: {
+            items: 1,
+            nav: false
+          },
+          680: {
+            items: 2,
+            nav: false,
+            loop: false
+          },
+          1000: {
+            items: 3,
+            nav: true
+          }
+        }
+      });
+    };
+  
+    (function ($) {
+      carousels();
+    })(jQuery);
+  })();
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    $(document).ready(function() {
+ 
+ $("#owl-reviews").owlCarousel({
+     slideSpeed : 300,
+     paginationSpeed : 400,
+     singleItem:true
+
+     // "singleItem:true" is a shortcut for:
+     // items : 1, 
+     // itemsDesktop : false,
+     // itemsDesktopSmall : false,
+     // itemsTablet: false,
+     // itemsMobile : false
+
+ });
+
+});
+
+
+    
+});
+  </script>
+
+
+<!-- lightgallery -->
+<script>
+  var imagPop = document.getElementById("lightgalleryimgs");
+  if(imagPop){
+    lightGallery(imagPop, {thumbnail: true,});
+  }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Active Nav Link Indicator with Vanilla Javascript -->
+<script>
+  const activePage = window.location.pathname;
+const navLinks = document.querySelectorAll('nav a').forEach(link => {
+  if((link.href.includes(`${activePage}`)) && (activePage.toString() !== "/")){
+    link.classList.add('active');
+  }
+})
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const informationAlert = document.getElementById("informationAlert");
+    const errorAlert = document.getElementById("errorAlert");
+    const successAlert = document.getElementById("successAlert");
+
+    if (errorAlert) {
+      errorAlert.querySelector(".close i").addEventListener("click", function () {
+        errorAlert.style.display = "none";
+        delete success;
+      });
+    }
+    if(informationAlert){
+      informationAlert.querySelector(".close i").addEventListener("click", function () {
+          informationAlert.style.display = "none";
+        delete errors;
+      });
+    }
+
+    if (successAlert) {
+      successAlert.querySelector(".close i").addEventListener("click", function () {
+        successAlert.style.display = "none";
+        delete success;
+      });
+    }
+  });
+</script>
+
+<script>
+function passwordstate(elm) {
+  var ELM_input = elm.parentNode.querySelector('input[name="password"]');
+  if (ELM_input.getAttribute('type') === "password") {
+    ELM_input.setAttribute('type', 'text');
+  } else {
+    ELM_input.setAttribute('type', 'password');
+  };
+};
+</script>

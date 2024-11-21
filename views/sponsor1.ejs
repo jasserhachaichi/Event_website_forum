@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head') %>
+  <style>
+    #sponsor-section .video-container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    #sponsor-section .video-container video {
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--primary-color-1);
+    }
+
+    #sponsor-section .play-button-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+
+    #sponsor-section .play-button-wrapper #circle-play-b {
+      cursor: pointer;
+      pointer-events: auto;
+      width: 100px;
+      height: 100px;
+    }
+
+    #sponsor-section .play-button-wrapper #circle-play-b img {
+      width: 60%;
+      height: auto;
+      cursor: pointer;
+    }
+  </style>
+
+  <body>
+
+    <%- include('./partials/navbarone') %>
+
+      <div id="sponsor-section" class="section-2 px-3 pb-4">
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col-12 col-md-11 col-lg-9 col-xl-7 col-xxl-6 text-center text-white">
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="text-center mb-5">
+                    <a href="https://www.boudrant.com.tn/">
+                      <img src="images/boudrant.png" alt="boudrant" width="220" height="auto">
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="video-wrapper">
+                <div class="video-container" id="video-container">
+                  <video controls id="video" preload="metadata" poster="Sponors/Sponsor1/ThumbnailVideo.jpg">
+                    <source src="ForumVideos/1.mp4" type="video/mp4">
+                  </video>
+
+                  <div class="play-button-wrapper">
+                    <div title="Play video" class="play-gif" id="circle-play-b">
+                      <img src="images/play-solid.svg"></img>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="container mt-3 fw-medium">
+        <p>Depuis sa création en 1925, BOUDRANT, société de commerce, de distribution et de négoce de produits
+          techniques, a acquit une grande expérience dans le domaine de la transmission mécanique en général, ce qui
+          lui a permis de devenir leader en Tunisie, ainsi qu’une référence dans les pays du Maghreb.
+        </p>
+        <p>
+          Soucieux de maintenir cette position et de la développer, BOUDRANT a investi pour atteindre des objectifs
+          bien précis tels que :
+        </p>
+        <ul>
+          <li>Commercialiser des produits de qualité.</li>
+          <li>Représenter et collaborer avec des partenaires de renommées internationales.</li>
+          <li>Disposer d’un effectif qualifié, dynamique et expérimenté, composé d’ingénieurs et de techniciens
+            supérieurs.</li>
+          <li>Garantir la disponibilité d’un stock considérable et informatisé.</li>
+          <li>Assurer le conseil, l’assistance technique et la documentation nécessaire aux clients.</li>
+          <li>Fidéliser les clients et les considérer comme partenaires.</li>
+          <li>Offrir une qualité de service approprié.</li>
+        </ul>
+
+        <p>
+          Ceci amène BOUDRANT à être plus vigilant, plus performant, et à rester à l’écoute de ses partenaires qui
+          demeurent toujours sa préoccupation majeure.
+        </p>
+        <p>
+          Nos Départements Roulements et accessoires industriels
+          Roulements, ensembles roulements, paliers, produits de maintenance, guidages linéaires, bagues, chaines porte
+          câble, graisses, lubrification industrielle, colles, para-huile, etc.
+        </p>
+
+      </div>
+
+
+
+
+      <section class="bg-light py-3 py-md-5">
+        <div class="container">
+          <div class="row justify-content-md-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+              <h2 class="title_section mb-4 display-5 text-center">Photo de la journée de l'événement</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="container overflow-hidden">
+          <div id="lightgalleryimgs" class="row gy-3 gy-md-2 ">
+
+
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/1.jpg" data-src="Sponors/Sponsor1/img/1.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/1.jpg" data-lg-size="1000-600" data-lg-thumbnail="Sponors/Sponsor1/img/1.jpg">
+                  <img src="Sponors/Sponsor1/img/1.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+
+
+
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/3.jpg"
+              data-src="Sponors/Sponsor1/img/3.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/3.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/3.jpg">
+                  <img src="Sponors/Sponsor1/img/3.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/4.jpg"
+              data-src="Sponors/Sponsor1/img/4.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/4.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/4.jpg">
+                  <img src="Sponors/Sponsor1/img/4.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/5.jpg"
+              data-src="Sponors/Sponsor1/img/5.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/5.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/5.jpg">
+                  <img src="Sponors/Sponsor1/img/5.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/6.jpg"
+              data-src="Sponors/Sponsor1/img/6.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/6.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/6.jpg">
+                  <img src="Sponors/Sponsor1/img/6.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/7.jpg"
+              data-src="Sponors/Sponsor1/img/7.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/7.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/7.jpg">
+                  <img src="Sponors/Sponsor1/img/7.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/8.jpg"
+              data-src="Sponors/Sponsor1/img/8.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/8.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/8.jpg">
+                  <img src="Sponors/Sponsor1/img/8.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/9.jpg"
+              data-src="Sponors/Sponsor1/img/9.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/9.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/9.jpg">
+                  <img src="Sponors/Sponsor1/img/9.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/10.jpg"
+              data-src="Sponors/Sponsor1/img/10.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/10.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/10.jpg">
+                  <img src="Sponors/Sponsor1/img/10.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 " data-src="Sponors/Sponsor1/img/2.jpg"
+              data-src="Sponors/Sponsor1/img/2.jpg" data-sub-html="<h4>CMD Site interface</h4>">
+              <figure class="rounded rounded-4 overflow-hidden ">
+                <a href="Sponors/Sponsor1/img/2.jpg" data-lg-size="1000-600"
+                  data-lg-thumbnail="Sponors/Sponsor1/img/2.jpg">
+                  <img src="Sponors/Sponsor1/img/2.jpg" class="img-fluid " loading="lazy" alt="">
+                </a>
+              </figure>
+            </div>
+
+
+          </div>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <%- include('./partials/calltoaction') %>
+        <%- include('./partials/ScrollTopButton') %>
+          <%- include('./partials/footer') %>
+  </body>
+
+
+
+  <script>
+    const videoelement = document.getElementById("video");
+    const circlePlayButton = document.getElementById("circle-play-b");
+    function togglePlay() {
+      if (videoelement.paused || videoelement.ended) {
+        videoelement.play();
+      } else {
+        videoelement.pause();
+      }
+    }
+    if (videoelement && circlePlayButton) {
+      circlePlayButton.addEventListener("click", togglePlay);
+      videoelement.addEventListener("playing", function () {
+        circlePlayButton.style.opacity = 0;
+      });
+      videoelement.addEventListener("pause", function () {
+        circlePlayButton.style.opacity = 1;
+      });
+    }
+
+
+
+
+
+  </script>
+
+</html>

@@ -1,0 +1,185 @@
+<script>
+  // Function to decode URL-encoded values
+  function decodeCookieValue(value) {
+    return decodeURIComponent(value.replace(/\+/g, ' '));
+  }
+  
+  // Function to extract and parse JSON from a string
+  function extractAndParseJson(input) {
+    // Use a regular expression to find content between curly braces
+    var match = /\{([^}]+)\}/.exec(input);
+  
+    // Check if a match is found
+    if (match) {
+      // Extract the matched content
+      var jsonString = match[0];
+  
+      // Parse the JSON string into a JavaScript object
+      try {
+        var jsonObject = JSON.parse(jsonString);
+  
+        // Return the parsed object
+        return jsonObject;
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+      }
+    }
+  
+    // Return null if no match is found
+    return null;
+  }
+  // Function to get and parse the Siteu cookie
+  function getAndParseSiteuCookie() {
+    // Get the Siteu cookie by name
+    var siteuCookie = document.cookie
+      .split(';')
+      .find(cookie => cookie.trim().startsWith('Siteu='));
+  
+    if (siteuCookie) {
+      // Extract and parse JSON from the Siteu cookie
+      var [, siteuValue] = siteuCookie.split('=');
+      var decodedValue = decodeCookieValue(siteuValue);
+      var jsonObject = extractAndParseJson(decodedValue);
+  
+      if (jsonObject) {
+        return jsonObject;
+      }
+    } else {
+      console.log('Not found.');
+    }
+  }
+  
+  const UserInfo = getAndParseSiteuCookie();
+  document.getElementById("UserName").innerHTML = UserInfo.username + " "+UserInfo.userfirstname + "<br/><span>" + UserInfo.userposition +"</span>"
+  </script>
+  
+<script>
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function () {
+      $(".dashboard-nav-dropdown-toggle").click(function () {
+        $(this).closest(".dashboard-nav-dropdown")
+          .toggleClass("show")
+          .find(".dashboard-nav-dropdown")
+          .removeClass("show");
+        $(this).parent()
+          .siblings()
+          .removeClass("show");
+      });
+      $(".menu-toggle").click(function () {
+        if (mobileScreen.matches) {
+          $(".dashboard-nav").toggleClass("mobile-show");
+        } else {
+          $(".dashboard").toggleClass("dashboard-compact");
+        }
+      });
+    });
+  </script>
+
+<script>
+  function menuToggle() {
+    const toggleMenu = document.querySelector(".menu");
+    toggleMenu.classList.toggle("active");
+  }
+</script>
+<script>
+  function sortTable(index) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("Forum_table");
+      switching = true;
+      dir = "asc"; // Set the sorting direction to ascending:
+
+      /* Make a loop that will continue until no switching has been done: */
+      while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.getElementsByTagName("TR");
+
+          /* Loop through all table rows (except the first, which contains table headers): */
+          for (i = 1; i < (rows.length - 1); i++) {
+              // Start by saying there should be no switching:
+              shouldSwitch = false;
+
+              /* Get the two elements you want to compare, one from current row and one from the next: */
+              x = rows[i].getElementsByTagName("TD")[index];
+              y = rows[i + 1].getElementsByTagName("TD")[index];
+
+              /* Check if the two rows should switch place, based on the direction, asc or desc: */
+              if (dir == "asc") {
+                  if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                      // If so, mark as a switch and break the loop:
+                      shouldSwitch = true;
+                      break;
+                  }
+              } else if (dir == "desc") {
+                  if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                      // If so, mark as a switch and break the loop:
+                      shouldSwitch = true;
+                      break;
+                  }
+              }
+          }
+          if (shouldSwitch) {
+              /* If a switch has been marked, make the switch and mark that a switch has been done: */
+              rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+              switching = true;
+              // Each time a switch is done, increase this count by 1:
+              switchcount++;
+          } else {
+              /* If no switching has been done AND the direction is "asc", set the direction to "desc" and run the while loop again. */
+              if (switchcount == 0 && dir == "asc") {
+                  dir = "desc";
+                  switching = true;
+              }
+          }
+      }
+            // Remove sorted classes from all headers
+            var allHeaders = table.querySelectorAll("th i");
+      for (i = 0; i < allHeaders.length; i++) {
+          allHeaders[i].classList.remove("fa-caret-up" , "fa-caret-down","fa-up-down");
+      };
+      for (i = 0; i < allHeaders.length; i++) {
+        if(i != index){
+          allHeaders[i].classList.add("fa-up-down");
+        };
+      };
+
+      // Apply class to the current header for visual indicator
+      var headerTable = table.querySelectorAll("th i")[index];
+      headerTable.classList.remove("fa-caret-up" , "fa-caret-down");
+      headerTable.classList.add(dir == "desc" ? "fa-caret-up" : "fa-caret-down");
+  }
+</script>
+
+<script>
+function passwordstate(elm) {
+    var ELM_input = elm.parentNode.querySelector('input[type="password"], input[type="text"]');
+    if (ELM_input.getAttribute('type') === "password") {
+        ELM_input.setAttribute('type', 'text');
+    } else {
+        ELM_input.setAttribute('type', 'password');
+    }
+};
+</script>
+
+<script>
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+  }
+
+  // Function to get a cookie value
+  function getCookie(name) {
+      const cookieName = `${name}=`;
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          let cookie = cookies[i].trim();
+          if (cookie.indexOf(cookieName) === 0) {
+              return cookie.substring(cookieName.length, cookie.length);
+          }
+      }
+      return null;
+  }
+
+</script>
